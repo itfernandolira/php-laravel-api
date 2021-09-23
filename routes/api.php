@@ -29,3 +29,14 @@ Route::get('/', function () {
     return ['Chegamos aqui'=>'SIM'];
     //ver content-type response
 });
+
+//os métodos create e edit não são implementados em api
+//Route::resource('Cliente','App\Http\Controllers\ClienteController');
+
+Route::apiResource('Cliente','ClienteController');
+Route::apiResource('Carro','CarroController');
+Route::apiResource('Aluguer','AluguerController');
+Route::apiResource('Marca','MarcaController');
+Route::apiResource('Modelo','ModeloController');
+
+
