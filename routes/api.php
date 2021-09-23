@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//localhost/api - cai sempre nas rotas api.php
+//esta é exatamente igual à de web e por isso devolve o mesmo content-type
+/* Route::get('/', function () {
+    return view('welcome');
+}); */
+
+Route::get('/', function () {
+    //return application/json
+    return ['Chegamos aqui'=>'SIM'];
+    //ver content-type response
+});
