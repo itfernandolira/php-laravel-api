@@ -106,6 +106,8 @@ class MarcaController extends Controller
             //return  ["erro"=>"A Marca pesquisada não existe!"];
             return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else {
+            $request->validate($this->marca->regras($id),$this->marca->feedback());
+
             $marca->update($request->all());
             return response()->json($marca,200);
         }

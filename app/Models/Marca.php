@@ -10,9 +10,15 @@ class Marca extends Model
     use HasFactory;
     protected $fillable=['nome','imagem'];
 
-    public function regras() {
+    /* 
+        Parametros unique
+        1 - nome da tabela
+        2 - nome do campo a pesquisar (geralemente igual do form e por isso omitido)
+        3 - id do registo que não será considerado na pesquisa
+    */
+    public function regras($id=-1) {
         return [
-            "nome"=>"required|unique:marcas",
+            "nome"=>"required|unique:marcas,nome,$id",
             "imagem"=>"required"
         ];
     }
