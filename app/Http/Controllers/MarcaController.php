@@ -51,17 +51,7 @@ class MarcaController extends Controller
         //Fazer post com postman e verificar o request
         //dd($request->all());
 
-        $regras=[
-            "nome"=>"required|unique:marcas",
-            "imagem"=>"required"
-        ];
-
-        $feedback=[
-            "required"=>"O campo :attribute é obrigatório",
-            "nome.unique"=>"A Marca indicada já existe"
-        ];
-
-        $request->validate($regras,$feedback);
+        $request->validate($this->marca->regras(),$this->marca->feedback());
 
         //$marca= Marca::create($request->all());
         $marca=$this->marca->create($request->all());
