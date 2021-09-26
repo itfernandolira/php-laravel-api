@@ -63,7 +63,10 @@ class MarcaController extends Controller
     public function show($id)
     {
         $marca=$this->marca->find($id);
-        return $marca;
+        if ($marca===null)
+            return  ["erro"=>"A Marca pesquisada não existe!"];
+        else
+            return $marca;
     }
 
     /**
@@ -93,8 +96,13 @@ class MarcaController extends Controller
 
         //$marca->update($request->all());
         $marca=$this->marca->find($id);
-        $marca->update($request->all());
-        return $marca;
+        if ($marca===null)
+            return  ["erro"=>"A Marca pesquisada não existe!"];
+        else {
+            $marca->update($request->all());
+            return $marca;
+        }
+            
     }
 
     /**
@@ -107,7 +115,11 @@ class MarcaController extends Controller
     {
         //
         $marca=$this->marca->find($id);
-        $marca->delete();
-        return(["msg"=>"A Marca foi apagada com sucesso!"]);
+        if ($marca===null)
+            return  ["erro"=>"A Marca pesquisada não existe!"];
+        else {
+            $marca->delete();
+            return(["msg"=>"A Marca foi apagada com sucesso!"]);
+        }
     }
 }
