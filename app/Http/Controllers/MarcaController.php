@@ -79,6 +79,12 @@ class MarcaController extends Controller
     public function update(Request $request, Marca $marca)
     {
         //
+        /* print_r($request->all()); //dados novos
+        echo "<hr>";
+        print_r($marca->getAttributes()); //dados antigos */
+
+        $marca->update($request->all());
+        return $marca;
     }
 
     /**
