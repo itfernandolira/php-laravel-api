@@ -96,5 +96,7 @@ class MarcaController extends Controller
     public function destroy(Marca $marca)
     {
         //
+        $marca->delete();
+        return(["msg"=>"A Marca foi apagada com sucesso!"]);
     }
 }
