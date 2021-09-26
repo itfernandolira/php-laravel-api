@@ -106,7 +106,20 @@ class MarcaController extends Controller
             //return  ["erro"=>"A Marca pesquisada não existe!"];
             return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else {
-            $request->validate($this->marca->regras($id),$this->marca->feedback());
+            
+            if ($request->method() === 'PATCH') {
+                $regrasDinamicas=array();
+
+                //Percorrer todas as regras do Model
+                foreach($marca->regras() as $input=>$regra)  {
+                    //adiciona no array regrasdinamicas as regras correspondentes aos campos submetidos
+                    if(array_key_exists($input,$request->all()))
+                        $regrasDinamicas[$input]=$regra;
+                }
+                $request->validate($regrasDinamicas,$this->marca->feedback());
+            }
+            else
+                $request->validate($this->marca->regras($id),$this->marca->feedback());
 
             $marca->update($request->all());
             return response()->json($marca,200);
