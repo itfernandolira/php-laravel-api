@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Psr\Http\Message\ResponseInterface;
 
 class MarcaController extends Controller
 {
@@ -24,7 +25,8 @@ class MarcaController extends Controller
 
         //$marcas=Marca::all();
         $marcas=$this->marca->all();
-        return $marcas;
+        //return $marcas;
+        return response()->json($marcas,200);
     }
 
     /**
@@ -51,7 +53,8 @@ class MarcaController extends Controller
 
         //$marca= Marca::create($request->all());
         $marca=$this->marca->create($request->all());
-        return $marca;
+        //return $marca;
+        return response()->json($marca,201);
     }
 
     /**
@@ -64,9 +67,10 @@ class MarcaController extends Controller
     {
         $marca=$this->marca->find($id);
         if ($marca===null)
-            return  ["erro"=>"A Marca pesquisada não existe!"];
+            //return  ["erro"=>"A Marca pesquisada não existe!"];
+            return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else
-            return $marca;
+        return response()->json($marca,200);
     }
 
     /**
@@ -97,10 +101,11 @@ class MarcaController extends Controller
         //$marca->update($request->all());
         $marca=$this->marca->find($id);
         if ($marca===null)
-            return  ["erro"=>"A Marca pesquisada não existe!"];
+            //return  ["erro"=>"A Marca pesquisada não existe!"];
+            return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else {
             $marca->update($request->all());
-            return $marca;
+            return response()->json($marca,200);
         }
             
     }
@@ -116,10 +121,12 @@ class MarcaController extends Controller
         //
         $marca=$this->marca->find($id);
         if ($marca===null)
-            return  ["erro"=>"A Marca pesquisada não existe!"];
+            //return  ["erro"=>"A Marca pesquisada não existe!"];
+            return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else {
             $marca->delete();
-            return(["msg"=>"A Marca foi apagada com sucesso!"]);
+            //return(["msg"=>"A Marca foi apagada com sucesso!"]);
+            return response()->json(["msg"=>"A Marca foi apagada com sucesso!"],200);
         }
     }
 }
