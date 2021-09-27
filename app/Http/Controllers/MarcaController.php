@@ -51,10 +51,10 @@ class MarcaController extends Controller
         //Fazer post com postman e verificar o request
         //dd($request->all());
 
-        $request->validate($this->marca->regras(),$this->marca->feedback());
+        //$request->validate($this->marca->regras(),$this->marca->feedback());
 
         //$marca= Marca::create($request->all());
-        $marca=$this->marca->create($request->all());
+        //$marca=$this->marca->create($request->all());
         //return $marca;
         return response()->json($marca,201);
     }
