@@ -25,7 +25,7 @@ class ModeloController extends Controller
         $modelos=$this->modelo->with('marca')->get();
         // all()-> criar um obj de consulta + get() = collection
         // get()-> modificar a consulta -> collection
-        
+
         return response()->json($modelos,200);
     }
 
@@ -120,14 +120,22 @@ class ModeloController extends Controller
                 $request->validate($this->modelo->regras($id),$this->modelo->feedback());
 
             //se é enviado novo ficheiro, o antigo é apagado
-            if ($request->file('imagem'))
+            if ($request->file('imagem')) {
                 Storage::disk('public')->delete($modelo->imagem);
 
-            
-            $imagem=$request->file('imagem');
-            $imagem_urn=$imagem->store('imagens/modelos','public');
+                $imagem=$request->file('imagem');
+                $imagem_urn=$imagem->store('imagens/modelos','public');
+            }
+
+            //preeencher os objetos modificados com os dados do request
+            $modelo->fill($request->all());
+            if ($request->file('imagem'))
+                $modelo->imagem=$imagem_urn;
+                
+            //O Laravel distingue o save se o model tiver o id preenchido, transformando em update
+            $modelo->save();
     
-            $modelo->update([
+            /* $modelo->update([
                 "marca_id"=>$request->marca_id,
                 "nome"=>$request->nome,
                 "imagem"=>$imagem_urn,
@@ -135,7 +143,7 @@ class ModeloController extends Controller
                 "lugares"=>$request->lugares,
                 "air_bag"=>$request->air_bag,
                 "abs"=>$request->abs
-            ]);
+            ]); */
             return response()->json($modelo,200);
         }
     }

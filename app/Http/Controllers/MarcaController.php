@@ -128,17 +128,26 @@ class MarcaController extends Controller
                 $request->validate($this->marca->regras($id),$this->marca->feedback());
 
             //se é enviado novo ficheiro, o antigo é apagado
-            if ($request->file('imagem'))
+            if ($request->file('imagem')) {
                 Storage::disk('public')->delete($marca->imagem);
 
-            
-            $imagem=$request->file('imagem');
-            $imagem_urn=$imagem->store('imagens','public');
+                $imagem=$request->file('imagem');
+                $imagem_urn=$imagem->store('imagens','public');
+            }
+
+            //preeencher os objetos modificados com os dados do request
+            $marca->fill($request->all());
+            if ($request->file('imagem'))
+                $marca->imagem=$imagem_urn;
+                
+            //O Laravel distingue o save se o model tiver o id preenchido, transformando em update
+            $marca->save();
     
-            $marca->update([
+            /* $marca->update([
                 "nome"=>$request->nome,
                 "imagem"=>$imagem_urn
-            ]);
+            ]); */
+
             return response()->json($marca,200);
         }
             
