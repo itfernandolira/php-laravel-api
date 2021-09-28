@@ -55,7 +55,7 @@ class ModeloController extends Controller
             "imagem"=>$imagem_urn,
             "numero_portas"=>$request->numero_portas,
             "lugares"=>$request->lugares,
-            "airbag"=>$request->airbag,
+            "air_bag"=>$request->air_bag,
             "abs"=>$request->abs
         ]);
         
@@ -130,7 +130,7 @@ class ModeloController extends Controller
                 "imagem"=>$imagem_urn,
                 "numero_portas"=>$request->numero_portas,
                 "lugares"=>$request->lugares,
-                "airbag"=>$request->airbag,
+                "air_bag"=>$request->air_bag,
                 "abs"=>$request->abs
             ]);
             return response()->json($modelo,200);
