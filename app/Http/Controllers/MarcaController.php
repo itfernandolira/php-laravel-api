@@ -126,7 +126,14 @@ class MarcaController extends Controller
             else
                 $request->validate($this->marca->regras($id),$this->marca->feedback());
 
-            $marca->update($request->all());
+            
+            $imagem=$request->file('imagem');
+            $imagem_urn=$imagem->store('imagens','public');
+    
+            $marca->update([
+                "nome"=>$request->nome,
+                "imagem"=>$imagem_urn
+            ]);
             return response()->json($marca,200);
         }
             
