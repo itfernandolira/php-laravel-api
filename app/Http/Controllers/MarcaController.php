@@ -52,11 +52,23 @@ class MarcaController extends Controller
         //dd($request->all());
 
         //$request->validate($this->marca->regras(),$this->marca->feedback());
+        
+        //dd($request->nome);
+        //dd($request->imagem);
+        $imagem=$request->file('imagem');
+        //$imagem->store('path','disco');
+        //config/filesystems.php - 3 discos
+        //local - /storage/app
+        //public - /storage/app/public
+        //aws s3 - cloud
+        //$imagem->store('imagens'); //sem o segundo parametro é igual a local - primeiro teste
+        $imagem->store('imagens','public');
+
 
         //$marca= Marca::create($request->all());
         //$marca=$this->marca->create($request->all());
         //return $marca;
-        return response()->json($marca,201);
+        //return response()->json($marca,201);
     }
 
     /**
