@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\ResponseInterface;
 
 class MarcaController extends Controller
@@ -126,6 +127,10 @@ class MarcaController extends Controller
             else
                 $request->validate($this->marca->regras($id),$this->marca->feedback());
 
+            //se é enviado novo ficheiro, o antigo é apagado
+            if ($request->file('imagem'))
+                Storage::disk('public')->delete($marca->imagem);
+
             
             $imagem=$request->file('imagem');
             $imagem_urn=$imagem->store('imagens','public');
@@ -153,6 +158,10 @@ class MarcaController extends Controller
             //return  ["erro"=>"A Marca pesquisada não existe!"];
             return response()->json(["erro"=>"A Marca pesquisada não existe!"],404);
         else {
+
+            
+            Storage::disk('public')->delete($marca->imagem);
+
             $marca->delete();
             //return(["msg"=>"A Marca foi apagada com sucesso!"]);
             return response()->json(["msg"=>"A Marca foi apagada com sucesso!"],200);
