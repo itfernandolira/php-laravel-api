@@ -19,14 +19,15 @@ class Marca extends Model
     public function regras($id=-1) {
         return [
             "nome"=>"required|unique:marcas,nome,$id",
-            "imagem"=>"required"
+            "imagem"=>"required|file|mimes:png,jpg,jpeg"
         ];
     }
 
     public function feedback() {
         return [
             "required"=>"O campo :attribute é obrigatório",
-            "nome.unique"=>"A Marca indicada já existe"
+            "nome.unique"=>"A Marca indicada já existe",
+            "imagem.mimes"=>"O ficheiro deve ser uma imagem do tipo PNG ou JPG"
         ];
     }
 }
