@@ -40,4 +40,9 @@ class Modelo extends Model
             "lugares.between"=>"O número de lugares deve ser um número inteiro entre 1 e 20"
         ];
     }
+
+    public function marca() {
+        //UM modelo pertende a UMA marca
+        return $this->belongsTo('App\Models\Marca');
+    }
 }
