@@ -35,6 +35,12 @@ class ModeloController extends Controller
         else
             $modelos=$this->modelo->with('marca');
 
+        //...&filtro=nome:=:5008
+        if ($request->has('filtro')) {
+            $condicoes=explode(":",$request->filtro);
+            $modelos=$modelos->where($condicoes[0],$condicoes[1],$condicoes[2]);
+        }
+
         if ($request->has('atributos')) {
             //with tem de ter o atributo marca_id nos atributos caso contrário devolve nulo
             $modelos=$modelos->selectRaw($request->atributos)->get();
