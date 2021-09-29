@@ -28,16 +28,22 @@ class ModeloController extends Controller
 
         //$modelos=array();
 
+        if ($request->has('atributos_marca')) {
+            $atributos_marca=$request->atributos_marca;
+            $modelos=$this->modelo->with('marca:id,'.$atributos_marca);
+        }
+        else
+            $modelos=$this->modelo->with('marca');
+
         if ($request->has('atributos')) {
             //with tem de ter o atributo marca_id nos atributos caso contrário devolve nulo
-            $modelos=$this->modelo->selectRaw($request->atributos)->with('marca')->get();
+            $modelos=$modelos->selectRaw($request->atributos)->get();
         } else {
-            $modelos=$this->modelo->with('marca')->get();
+            $modelos=$modelos->get();
             // all()-> criar um obj de consulta + get() = collection
             // get()-> modificar a consulta -> collection
         }
         
-
         return response()->json($modelos,200);
     }
 
