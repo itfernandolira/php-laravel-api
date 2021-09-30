@@ -19,13 +19,42 @@ class MarcaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //Lista todos as Marcas
         //return ("Chegamos até aqui - Marcas");
 
+        //$marcas=array();
+
+        if ($request->has('atributos_modelo')) {
+            $atributos_modelo=$request->atributos_modelo;
+            $marcas=$this->marca->with('modelos:marca_id,'.$atributos_modelo);
+        }
+        else
+            $marcas=$this->marca->with('modelos');
+
+        //...&filtro=nome:=:5008
+        if ($request->has('filtro')) {
+            $filtros=explode(";",$request->filtro);
+
+            foreach($filtros as $key=>$expressao) {
+                $condicoes=explode(":",$expressao);
+                $marcas=$marcas->where($condicoes[0],$condicoes[1],$condicoes[2]);
+            }
+            
+        }
+
+        if ($request->has('atributos')) {
+            //with tem de ter o atributo marca_id nos atributos caso contrário devolve nulo
+            $marcas=$marcas->selectRaw($request->atributos)->get();
+        } else {
+            $marcas=$marcas->get();
+            // all()-> criar um obj de consulta + get() = collection
+            // get()-> modificar a consulta -> collection
+        }
+
         //$marcas=Marca::all();
-        $marcas=$this->marca->with('modelos')->get();
+        //$marcas=$this->marca->with('modelos')->get();
         //return $marcas;
         return response()->json($marcas,200);
     }
