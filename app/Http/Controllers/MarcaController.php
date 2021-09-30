@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use App\Repositories\MarcaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\ResponseInterface;
@@ -21,6 +22,9 @@ class MarcaController extends Controller
      */
     public function index(Request $request)
     {
+        //stand by
+        //$marcaRepository=new MarcaRepository($this->marca);
+        
         //Lista todos as Marcas
         //return ("Chegamos até aqui - Marcas");
 
