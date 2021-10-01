@@ -33,11 +33,14 @@ Route::get('/', function () {
 //os métodos create e edit não são implementados em api
 //Route::resource('Cliente','App\Http\Controllers\ClienteController');
 
-Route::apiResource('cliente','ClienteController');
-Route::apiResource('carro','CarroController');
-Route::apiResource('aluguer','AluguerController');
-Route::apiResource('marca','MarcaController');
-Route::apiResource('modelo','ModeloController');
+Route::prefix('v1')->middleware('jwt.auth')->group(function() {
+    Route::apiResource('cliente','ClienteController');
+    Route::apiResource('carro','CarroController');
+    Route::apiResource('aluguer','AluguerController');
+    Route::apiResource('marca','MarcaController');
+    Route::apiResource('modelo','ModeloController');
+});
+
 
 Route::post('login','AuthController@login');
 Route::post('logout','AuthController@logout');
